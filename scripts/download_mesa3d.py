@@ -52,7 +52,9 @@ def extract_opengl_dll_7z(archive_path: Path, output_dir: Path) -> None:
         
     except FileNotFoundError:
         print("Error: 7z command not found.")
-        print("\nPlease install 7-Zip and ensure it's in your PATH, or:")
+        print("\nTo install 7-Zip, run:")
+        print("  winget install --source winget --exact 7zip.7zip")
+        print("\nOr manually:")
         print(f"1. Download {MESA_URL}")
         print(f"2. Extract x86/opengl32.dll manually to {output_dir / 'opengl32.dll'}")
         sys.exit(1)

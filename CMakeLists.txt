@@ -197,6 +197,17 @@ add_custom_command(TARGET ra2_trainer_backend POST_BUILD
   ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
 )
 set(MESA3D_DLL ${CMAKE_CURRENT_SOURCE_DIR}/deps/mesa3d/opengl32.dll)
+if(NOT EXISTS ${MESA3D_DLL})
+  message(STATUS "Mesa3D OpenGL renderer not found, downloading...")
+  execute_process(
+    COMMAND ${CMAKE_COMMAND} -E env python ${CMAKE_CURRENT_SOURCE_DIR}/scripts/download_mesa3d.py
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    RESULT_VARIABLE DOWNLOAD_RESULT
+  )
+  if(NOT DOWNLOAD_RESULT EQUAL 0)
+    message(WARNING "Failed to download Mesa3D. Run 'python scripts/download_mesa3d.py' manually.")
+  endif()
+endif()
 if(EXISTS ${MESA3D_DLL})
   add_custom_command(TARGET ra2_trainer POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different

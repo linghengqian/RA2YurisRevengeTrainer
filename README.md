@@ -67,10 +67,9 @@ python -m pip install exccpkg
 git clone https://github.com/AdjWang/RA2YurisRevengeTrainer.git
 cd ./RA2YurisRevengeTrainer
 python exccpkgfile.py
-python scripts/download_mesa3d.py
 ```
 
-> 注意: `download_mesa3d.py` 脚本会下载 Mesa3D OpenGL 软件渲染器，使桌面端前端可以在 RDP/Hyper-V 环境中运行。该脚本需要系统安装 7-Zip 命令行工具 (`7z`)。如果未安装，可以使用 `winget install --source winget --exact 7zip.7zip` 安装。
+> 注意: Mesa3D OpenGL 软件渲染器会在 CMake 配置时自动下载。如果自动下载失败，可以手动运行 `python scripts/download_mesa3d.py`。该脚本需要系统安装 7-Zip 命令行工具 (`7z`)。如果未安装，可以使用 `winget install --source winget --exact 7zip.7zip` 安装。
 
 ### 编译前端
 

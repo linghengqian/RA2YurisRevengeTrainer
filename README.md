@@ -160,7 +160,6 @@ Ares：将 `ra2_trainer_backend.dll` 和 `ra2_trainer_backend.toml` 放到游戏
   1. **推荐**：使用网页端前端代替桌面端，通过浏览器访问 `http://localhost:35271`
   2. **自动包含**：从 v5.0.3 开始，发布包中已自动包含 Mesa3D OpenGL 软件渲染器 (`opengl32.dll`)，可在 RDP/Hyper-V 环境中直接使用
 
-
 ## 界面说明
 
 ### 阵营过滤列表页面

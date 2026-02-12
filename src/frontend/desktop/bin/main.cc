@@ -32,7 +32,6 @@ static bool g_opengl_error_occurred = false;
 static std::string g_opengl_error_message;
 
 static void ErrorCallback(int error, const char* description) {
-  // Check if this is an OpenGL driver error
   if (error == GLFW_PLATFORM_ERROR && 
       (std::string(description).find("OpenGL") != std::string::npos ||
        std::string(description).find("WGL") != std::string::npos)) {

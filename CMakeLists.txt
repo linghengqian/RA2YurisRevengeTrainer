@@ -196,8 +196,6 @@ add_custom_command(TARGET ra2_trainer_backend POST_BUILD
   ${CMAKE_CURRENT_SOURCE_DIR}/scripts/ra2_trainer_backend.toml
   ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
 )
-
-# Copy Mesa3D OpenGL software renderer (if available) for RDP/Hyper-V support
 set(MESA3D_DLL ${CMAKE_CURRENT_SOURCE_DIR}/deps/mesa3d/opengl32.dll)
 if(EXISTS ${MESA3D_DLL})
   add_custom_command(TARGET ra2_trainer POST_BUILD

@@ -153,6 +153,15 @@ Ares：将 `ra2_trainer_backend.dll` 和 `ra2_trainer_backend.toml` 放到游戏
 
 - `Tiberium Crisis 2` 任务结束退出时如果没有附加 Ares 调试器会无法保存当前游戏进度和勋章。仅在使用 `Debug` 模式编译时会遇到此问题。
 
+- **在 Hyper-V 虚拟机或远程桌面 (RDP) 环境中无法启动桌面端前端 `ra2_trainer.exe`**。这是因为这些环境不支持硬件 OpenGL。解决方案：
+  1. **推荐**：使用网页端前端代替桌面端，通过浏览器访问 `http://localhost:35271`
+  2. 安装 Mesa3D OpenGL 软件渲染器：
+     - 从 [mesa-dist-win](https://github.com/pal1000/mesa-dist-win/releases) 下载最新版本
+     - 解压 `opengl32.dll` 到 `ra2_trainer.exe` 所在目录
+     - 重新启动 `ra2_trainer.exe`
+  3. 对于 Hyper-V 用户，可以尝试使用基本会话模式 (Basic Session Mode) 而非增强会话模式 (Enhanced Session Mode)
+
+
 ## 界面说明
 
 ### 阵营过滤列表页面

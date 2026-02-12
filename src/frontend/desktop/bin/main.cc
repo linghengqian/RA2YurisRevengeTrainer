@@ -140,7 +140,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, int) {
   window = glfwCreateWindow(556, 900, "RA2 Trainer", NULL, NULL);
   if (!window) {
     if (g_opengl_error_occurred) {
-      // Provide helpful error message for OpenGL issues
       LOG_F(ERROR, "Failed to create OpenGL context. This usually happens in remote desktop or VM environments.");
       LOG_F(ERROR, "OpenGL error: {}", g_opengl_error_message);
       LOG_F(ERROR, "");
@@ -149,12 +148,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, int) {
       LOG_F(ERROR, "1. Download from https://github.com/pal1000/mesa-dist-win/releases");
       LOG_F(ERROR, "2. Extract x86/opengl32.dll to the same directory as ra2_trainer.exe");
       LOG_F(ERROR, "");
-      LOG_F(ERROR, "Alternative solutions:");
-      LOG_F(ERROR, "- Use the web frontend instead (recommended): http://localhost:35271");
-      LOG_F(ERROR, "- For Hyper-V: Use Basic Session Mode instead of Enhanced Session Mode");
+      LOG_F(ERROR, "Alternative: Use the web frontend instead (recommended): http://localhost:35271");
       
       MessageBoxW(NULL, 
-                  L"Failed to initialize OpenGL. This application cannot run in RDP/Hyper-V Enhanced Session Mode without a software renderer.\n\n"
+                  L"Failed to initialize OpenGL. This application cannot run in RDP/Hyper-V without a software renderer.\n\n"
                   L"The Mesa3D software renderer (opengl32.dll) should be in the same directory as ra2_trainer.exe.\n"
                   L"If it's missing, please check ra2_trainer_frontend.log for download instructions.\n\n"
                   L"Alternative: Use the web frontend at http://localhost:35271",

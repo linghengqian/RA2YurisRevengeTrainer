@@ -159,7 +159,6 @@ Ares：将 `ra2_trainer_backend.dll` 和 `ra2_trainer_backend.toml` 放到游戏
 - **在 Hyper-V 虚拟机或远程桌面 (RDP) 环境中无法启动桌面端前端 `ra2_trainer.exe`**。这是因为这些环境不支持硬件 OpenGL。解决方案：
   1. **推荐**：使用网页端前端代替桌面端，通过浏览器访问 `http://localhost:35271`
   2. **自动包含**：从 v5.0.3 开始，发布包中已自动包含 Mesa3D OpenGL 软件渲染器 (`opengl32.dll`)，可在 RDP/Hyper-V 环境中直接使用
-  3. 对于 Hyper-V 用户，可以尝试使用基本会话模式 (Basic Session Mode) 而非增强会话模式 (Enhanced Session Mode)
 
 
 ## 界面说明

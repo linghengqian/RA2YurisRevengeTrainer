@@ -28,8 +28,20 @@ void SetViewport(int x, int y, int width, int height) {
 }
 
 namespace {
+static bool g_opengl_error_occurred = false;
+static std::string g_opengl_error_message;
+
 static void ErrorCallback(int error, const char* description) {
-  LOG_F(FATAL, "error=[{}] {}", error, description);
+  // Check if this is an OpenGL driver error
+  if (error == GLFW_PLATFORM_ERROR && 
+      (std::string(description).find("OpenGL") != std::string::npos ||
+       std::string(description).find("WGL") != std::string::npos)) {
+    g_opengl_error_occurred = true;
+    g_opengl_error_message = description;
+    LOG_F(ERROR, "OpenGL error=[{}] {}", error, description);
+  } else {
+    LOG_F(FATAL, "error=[{}] {}", error, description);
+  }
 }
 
 static void FramebufferSizeCallback(GLFWwindow* window, int width, int height) {
@@ -127,6 +139,31 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, int) {
 
   window = glfwCreateWindow(556, 900, "RA2 Trainer", NULL, NULL);
   if (!window) {
+    if (g_opengl_error_occurred) {
+      // Provide helpful error message for OpenGL issues
+      LOG_F(ERROR, "Failed to create OpenGL context. This usually happens in remote desktop or VM environments.");
+      LOG_F(ERROR, "OpenGL error: {}", g_opengl_error_message);
+      LOG_F(ERROR, "");
+      LOG_F(ERROR, "Possible solutions:");
+      LOG_F(ERROR, "1. Install Mesa3D OpenGL software renderer:");
+      LOG_F(ERROR, "   - Download from https://github.com/pal1000/mesa-dist-win/releases");
+      LOG_F(ERROR, "   - Extract opengl32.dll to the same directory as ra2_trainer.exe");
+      LOG_F(ERROR, "2. Use the web frontend instead (if available)");
+      LOG_F(ERROR, "3. Run the trainer on a physical machine or VM with GPU passthrough");
+      LOG_F(ERROR, "");
+      LOG_F(ERROR, "For Hyper-V users:");
+      LOG_F(ERROR, "- Enhanced Session Mode uses RDP which doesn't support hardware OpenGL");
+      LOG_F(ERROR, "- Try using Basic Session Mode or install Mesa3D software renderer");
+      
+      MessageBoxW(NULL, 
+                  L"Failed to initialize OpenGL. This application cannot run in RDP/Hyper-V Enhanced Session Mode without a software renderer.\n\n"
+                  L"Please check ra2_trainer_frontend.log for detailed solutions, or:\n"
+                  L"1. Install Mesa3D OpenGL software renderer (opengl32.dll)\n"
+                  L"2. Use Hyper-V Basic Session Mode instead of Enhanced Session Mode\n"
+                  L"3. Use the web frontend if available",
+                  L"RA2 Trainer - OpenGL Error",
+                  MB_OK | MB_ICONERROR);
+    }
     glfwTerminate();
     exit(EXIT_FAILURE);
   }

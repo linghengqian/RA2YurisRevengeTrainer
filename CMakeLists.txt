@@ -197,6 +197,20 @@ add_custom_command(TARGET ra2_trainer_backend POST_BUILD
   ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
 )
 
+# Copy Mesa3D OpenGL software renderer (if available) for RDP/Hyper-V support
+set(MESA3D_DLL ${CMAKE_CURRENT_SOURCE_DIR}/deps/mesa3d/opengl32.dll)
+if(EXISTS ${MESA3D_DLL})
+  add_custom_command(TARGET ra2_trainer POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    ${MESA3D_DLL}
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/opengl32.dll
+    COMMENT "Copying Mesa3D OpenGL software renderer for RDP/Hyper-V compatibility"
+  )
+  message(STATUS "Mesa3D OpenGL renderer will be included in build output")
+else()
+  message(WARNING "Mesa3D OpenGL renderer not found at ${MESA3D_DLL}. Run 'python scripts/download_mesa3d.py' to download it.")
+endif()
+
 if (YRTR_BUILD_TEST)
   add_executable(test_server
     ${YRTR_SOURCE_DIR}/backend/bin/test_server.cc

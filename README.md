@@ -67,7 +67,10 @@ python -m pip install exccpkg
 git clone https://github.com/AdjWang/RA2YurisRevengeTrainer.git
 cd ./RA2YurisRevengeTrainer
 python exccpkgfile.py
+python scripts/download_mesa3d.py
 ```
+
+> 注意: `download_mesa3d.py` 脚本会下载 Mesa3D OpenGL 软件渲染器，使桌面端前端可以在 RDP/Hyper-V 环境中运行。该脚本需要系统安装 7-Zip 命令行工具 (`7z`)。
 
 ### 编译前端
 
@@ -155,10 +158,7 @@ Ares：将 `ra2_trainer_backend.dll` 和 `ra2_trainer_backend.toml` 放到游戏
 
 - **在 Hyper-V 虚拟机或远程桌面 (RDP) 环境中无法启动桌面端前端 `ra2_trainer.exe`**。这是因为这些环境不支持硬件 OpenGL。解决方案：
   1. **推荐**：使用网页端前端代替桌面端，通过浏览器访问 `http://localhost:35271`
-  2. 安装 Mesa3D OpenGL 软件渲染器：
-     - 从 [mesa-dist-win](https://github.com/pal1000/mesa-dist-win/releases) 下载最新版本
-     - 解压 `opengl32.dll` 到 `ra2_trainer.exe` 所在目录
-     - 重新启动 `ra2_trainer.exe`
+  2. **自动包含**：从 v5.0.3 开始，发布包中已自动包含 Mesa3D OpenGL 软件渲染器 (`opengl32.dll`)，可在 RDP/Hyper-V 环境中直接使用
   3. 对于 Hyper-V 用户，可以尝试使用基本会话模式 (Basic Session Mode) 而非增强会话模式 (Enhanced Session Mode)
 
 

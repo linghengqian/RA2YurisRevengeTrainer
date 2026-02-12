@@ -144,23 +144,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, PSTR, int) {
       LOG_F(ERROR, "Failed to create OpenGL context. This usually happens in remote desktop or VM environments.");
       LOG_F(ERROR, "OpenGL error: {}", g_opengl_error_message);
       LOG_F(ERROR, "");
-      LOG_F(ERROR, "Possible solutions:");
-      LOG_F(ERROR, "1. Install Mesa3D OpenGL software renderer:");
-      LOG_F(ERROR, "   - Download from https://github.com/pal1000/mesa-dist-win/releases");
-      LOG_F(ERROR, "   - Extract opengl32.dll to the same directory as ra2_trainer.exe");
-      LOG_F(ERROR, "2. Use the web frontend instead (if available)");
-      LOG_F(ERROR, "3. Run the trainer on a physical machine or VM with GPU passthrough");
+      LOG_F(ERROR, "The release package should include Mesa3D OpenGL software renderer (opengl32.dll).");
+      LOG_F(ERROR, "If opengl32.dll is missing in the same directory as ra2_trainer.exe:");
+      LOG_F(ERROR, "1. Download from https://github.com/pal1000/mesa-dist-win/releases");
+      LOG_F(ERROR, "2. Extract x86/opengl32.dll to the same directory as ra2_trainer.exe");
       LOG_F(ERROR, "");
-      LOG_F(ERROR, "For Hyper-V users:");
-      LOG_F(ERROR, "- Enhanced Session Mode uses RDP which doesn't support hardware OpenGL");
-      LOG_F(ERROR, "- Try using Basic Session Mode or install Mesa3D software renderer");
+      LOG_F(ERROR, "Alternative solutions:");
+      LOG_F(ERROR, "- Use the web frontend instead (recommended): http://localhost:35271");
+      LOG_F(ERROR, "- For Hyper-V: Use Basic Session Mode instead of Enhanced Session Mode");
       
       MessageBoxW(NULL, 
                   L"Failed to initialize OpenGL. This application cannot run in RDP/Hyper-V Enhanced Session Mode without a software renderer.\n\n"
-                  L"Please check ra2_trainer_frontend.log for detailed solutions, or:\n"
-                  L"1. Install Mesa3D OpenGL software renderer (opengl32.dll)\n"
-                  L"2. Use Hyper-V Basic Session Mode instead of Enhanced Session Mode\n"
-                  L"3. Use the web frontend if available",
+                  L"The Mesa3D software renderer (opengl32.dll) should be in the same directory as ra2_trainer.exe.\n"
+                  L"If it's missing, please check ra2_trainer_frontend.log for download instructions.\n\n"
+                  L"Alternative: Use the web frontend at http://localhost:35271",
                   L"RA2 Trainer - OpenGL Error",
                   MB_OK | MB_ICONERROR);
     }
